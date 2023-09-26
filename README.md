@@ -1,2 +1,2 @@
-# foodplan
+# Foodplan
 Food plan
