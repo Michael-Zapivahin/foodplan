@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% load static %}
 
-<body>
-    <header>
-        <nav class="navbar navbar-expand-md navbar-light fixed-top navbar__opacity">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="img/logo.8d8f24edbb5f.svg" height="55" width="189" alt="">
-                </a>
-                <button class="btn btn-outline-success me-2 shadow-none foodplan_green foodplan__border_green">Назад</button>
-            </div>
-        </nav>
-    </header>
+{% block title %}
+    <title>План питания на неделю, меню, рецепты, список покупок. Классическое меню, безуглеводное меню</title>
+{% block title %}
+
+{% block header-content %}
+    <button class="btn btn-outline-success me-2 shadow-none foodplan_green foodplan__border_green">Назад</button>
+{% endblock header-content%}
+
+{% block main %}
     <main style="margin-top: calc(2rem + 75px);">
         <section>
             <div class="container">
@@ -23,15 +21,15 @@
                     </div>
                     <div class="col-12 col-md-8 d-flex flex-column justify-content-between">
                         <div class="row">
-                            <h2>{{dish.title }}</h2>
+                            <h2>{{dish.title}}</h2>
                             <div class="col-12 col-sm-6">
-                                <h6>{{dish.description }}</h6>
+                                <h6>{{dish.description}}</h6>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <small class="link-secondary">Ингредиенты:</small>
                                 <ul class="list-group list-group-flush">
-                                    {% for component in dish %}
-                                        <li class="list-group-item disabled"><small>{{ component.title }} ({{component.weight}}.г)</small></li>
+                                    {% for component in dish.components %}
+                                        <li class="list-group-item disabled"><small>{{component.title}} ({{component.weight}}.г)</small></li>
                                     {% endfor %}
                                 </ul>
                                 <small class="link-secondary">Общая калорийность: {{dish.calories}} ккал</small>
@@ -42,7 +40,4 @@
             </div>
         </section>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-</body>
+{% endblock main %}
