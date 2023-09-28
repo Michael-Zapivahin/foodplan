@@ -2,7 +2,11 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import (
     Dish,
-    Component
+    Component,
+    Menu,
+    Allergy,
+    Client,
+    Subscription,
 )
 
 # Register your models here.
@@ -24,3 +28,25 @@ class DishAdmin(admin.ModelAdmin):
 class ComponentAdmin(admin.ModelAdmin):
     list_display = ['title', 'dish']
     ordering = ['dish']
+
+
+@admin.register(Menu)
+class MenuAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Allergy)
+class AllergyAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Client)
+class ClientAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    pass
+
+
