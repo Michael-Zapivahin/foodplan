@@ -6,7 +6,9 @@
 {% endblock title %}
 
 {% block header-content %}
-    <button class="btn btn-outline-success me-2 shadow-none foodplan_green foodplan__border_green">Назад</button>
+    <a href="{% url 'index' %}">
+        <button class="btn btn-outline-success me-2 shadow-none foodplan_green foodplan__border_green">Назад</button>
+    </a>
 {% endblock header-content%}
 
 {% block main %}
@@ -15,8 +17,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-4 d-flex justify-content-center">
-                        <div class="card foodplan__card_borderless">
-                            <img src="img/circle1.png" alt="">
+                        <div class="col-md-4">
+                            <img src="../media/{{ dish.photo|urlencode }}"  class="card-img-top{object-fit: cover;}" alt="фото торта {{ dish.title }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-8 d-flex flex-column justify-content-between">
