@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Dish, Component
+from .models import Dish
 
 
 
@@ -40,7 +40,7 @@ def catalog(request):
     context = {}
     return render(request, 'catalog.html', context=context)
 
-=======
+
 def card(request):
     dish = Dish.objects.all()[0]
     context = {
