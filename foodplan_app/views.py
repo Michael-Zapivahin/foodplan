@@ -1,20 +1,12 @@
 from django.shortcuts import render
-from .models import Dish
+
+from .models import Dish, Component
+
 
 
 def index(request):
     return render(request, 'index.html')
 
-
-def card(request, id=None):
-    dish = Dish.objects.all()[0]
-    context = {
-        'title': dish.title,
-        'description': dish.description,
-        'calories': dish.calories,
-        'components': dish.components.all(),
-    }
-    return render(request, template_name='card.html', context={'dish': context})
 
 
 def lk(request, id):
@@ -47,4 +39,17 @@ def registration(request):
 def catalog(request):
     context = {}
     return render(request, 'catalog.html', context=context)
+
+=======
+def card(request):
+    dish = Dish.objects.all()[0]
+    context = {
+        'title': dish.title,
+        'descripion': dish.description,
+        'components': dish.components.all(),
+        'calories': dish.calories,
+        'photo': dish.photo,
+    }
+    dish = {'dish': context}
+    return render(request, 'card.html', context=dish)
 
