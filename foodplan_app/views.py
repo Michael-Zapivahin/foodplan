@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Dish
 
 
 def index(request):
@@ -6,7 +7,14 @@ def index(request):
 
 
 def card(request, id=None):
-    return render(request, 'card.html')
+    dish = Dish.objects.all()[0]
+    context = {
+        'title': dish.title,
+        'description': dish.description,
+        'calories': dish.calories,
+        'components': dish.components.all(),
+    }
+    return render(request, template_name='card.html', context={'dish': context})
 
 
 def lk(request, id):
