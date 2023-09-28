@@ -16,7 +16,7 @@ class Dish(models.Model):
 class Component(models.Model):
     title = models.CharField(max_length=200, verbose_name='Title')
     weight = models.IntegerField(blank=True, null=True, verbose_name='weight')
-    dish = models.ForeignKey(Dish, on_delete=models.CASCADE, related_name='dishes', verbose_name='dish')
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE, related_name='components', verbose_name='dish')
 
     def __str__(self):
         return self.title

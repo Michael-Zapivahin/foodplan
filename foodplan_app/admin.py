@@ -15,8 +15,12 @@ class DishAdmin(admin.ModelAdmin):
             url=dish.photo.url,
             height='100px',
         )
+    image_tag.short_description = 'Photo'
+    list_display = ['title', 'image_tag']
+    ordering = ['title']
 
 
 @admin.register(Component)
 class ComponentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['title', 'dish']
+    ordering = ['dish']
