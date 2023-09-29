@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
-from .models import Dish
+from .models import Dish, Allergy
+from .db_operations import create_subscription
 
 
 
@@ -16,15 +17,18 @@ def lk(request, id):
 
 
 def order(request):
-    # context = {'allergies': Allergy.objects.all()}
-    context = {
-        'allergies': [
-            {'title': 'Рыба', 'id': 1},
-            {'title': 'Мясо', 'id': 2},
-            {'title': 'Сыр', 'id': 3},
-        ],
-    }
-    return render(request, 'order.html', context=context)
+    if request.method == 'POST':
+        subscription = []
+        for key in request.POST:
+            subscription.append({'key': key, 'value': request.POST[key]})
+        subscription, created = create_subscription(subscription)
+        print(subscription, created)
+
+    allergies = Allergy.objects.all()
+    context = []
+    for allergy in allergies:
+        context.append({'title': allergy.title, 'id': allergy.id})
+    return render(request, 'order.html', context={'allergies': context})
 
 
 def auth(request):
