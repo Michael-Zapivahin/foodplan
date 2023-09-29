@@ -42,6 +42,8 @@ class Client(models.Model):
     name = models.CharField(max_length=200, verbose_name='Name')
     login = models.CharField(max_length=200, verbose_name='Login')
     password = models.CharField(max_length=200, verbose_name='Password')
+    mail = models.EmailField(max_length=200, verbose_name='Mail', help_text='example@mail.ru')
+    avatar = models.ImageField(blank=True, default='static/img/test_avatar.png')
 
     def __str__(self):
         return f'{self.name} ({self.login})'

@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Dish
+from .models import Dish, Client
+from .forms import ClientForm
 
 
 
@@ -10,8 +11,23 @@ def index(request):
 
 
 def lk(request, id):
-    context = {'client': {'name': 'Иван', 'mail': 'Иван@mail.ru', 'password': 'qwerty'}}
-    # context = {'client': Client.objects.get(id=id)}
+    client = Client.objects.get(id=id)
+    if request.method == "POST":
+        form = ClientForm(request.POST)
+
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            mail = form.cleaned_data['mail']
+            password = form.cleaned_data['password']
+            Client.objects.filter(id=id).update(name=name, mail=mail, password=password)
+
+            return redirect('lk', id=client.id)
+
+        else:
+            print('not valid')
+    else:
+        form = ClientForm()
+    context = {'form': form, 'client': client}
     return render(request, 'lk.html', context=context)
 
 
