@@ -58,21 +58,29 @@ class Subscription(models.Model):
     dinner = models.BooleanField(verbose_name='Dinner', default=True)
     desserts = models.BooleanField(verbose_name='Desserts', default=True)
     persons_number = models.IntegerField(verbose_name='Numer of persons', default=1)
-    allergy = models.ForeignKey(Allergy, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name='Allergy', related_name='subscriptions')
     cost = models.FloatField(blank=True, null=True, verbose_name='Cost')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='subscriptions')
     menu = models.ForeignKey(Menu, on_delete=models.DO_NOTHING, related_name='subscriptions')
+    status = models.BooleanField(default=True, verbose_name='Active')
 
     def __str__(self):
         return f'{self.client.name} / ({self.title})'
 
 
+class SubscriptionAllergy(models.Model):
+    subscription = models.ForeignKey(
+        Subscription,
+        on_delete=models.CASCADE,
+        verbose_name='Подписка',
+        related_name='subscription_allergies',
+    )
+    allergy = models.ForeignKey(
+        Allergy,
+        on_delete=models.DO_NOTHING,
+        verbose_name='Аллергия',
+        related_name='subscription_allergies',
+    )
 
-
-
-
-
-
-
-
-
+    def __str__(self):
+        return f'''{self.subscription.client.id}:{self.subscription.client.name}
+         - {self.allergy.title}:{self.allergy.title}'''

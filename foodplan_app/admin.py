@@ -7,6 +7,7 @@ from .models import (
     Allergy,
     Client,
     Subscription,
+    SubscriptionAllergy,
 )
 
 # Register your models here.
@@ -45,8 +46,17 @@ class ClientAdmin(admin.ModelAdmin):
     pass
 
 
+class AllergyInline(admin.TabularInline):
+    extra = 0
+    model = SubscriptionAllergy
+
+
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    pass
+    inlines = [AllergyInline,]
 
+
+@admin.register(SubscriptionAllergy)
+class SubscriptionAllergyAdmin(admin.ModelAdmin):
+    pass
 
