@@ -101,8 +101,8 @@
                                                     <h2>Название подписки</h2>
                                                 </div>
                                                 <div class="col-md-12 col-lg-9">
-                                                    {% if client.subscriptions.description %}
-                                                        <h6>{{ client.subscriptions.description}}</h6>
+                                                    {% if subscription %}
+                                                        <h6>{{ subscription.description}}</h6>
                                                     {% else %}
                                                     <h6>У вас нет подписок </h6>
                                                         <a href="{% url 'order' %}">
@@ -112,16 +112,26 @@
                                                 </div>
                                                 <div class="col-md-12 col-lg-3 text-muted d-flex flex-column justify-content-between">
                                                     <div class="d-flex flex-row justify-content-between">
-                                                        <small>Персоны: </small><small>3</small>
+                                                        <small>Персоны: </small><small>{{ subscription.persons_number }}</small>
                                                     </div>
                                                     <div class="d-flex flex-row justify-content-between">
-                                                        <small>Аллергии: </small><small>нет</small>
+                                                        <small>Аллергии: </small>
+                                                    </div>
+                                                    {% if subscription.subscription_allergies.all %}
+                                                        {% for allergy in subscription.subscription_allergies.all %}
+                                                        <div class="d-flex flex-row justify-content-between">
+                                                            <small>* {{ allergy}}</small>
+                                                        </div>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <small>* нет</small>
+                                                    {% endif %}
+
+                                                    <div class="d-flex flex-row justify-content-between">
+                                                        <small>Калории: </small><small>{{subscription.calories}}</small>
                                                     </div>
                                                     <div class="d-flex flex-row justify-content-between">
-                                                        <small>Калории: </small><small>1400</small>
-                                                    </div>
-                                                    <div class="d-flex flex-row justify-content-between">
-                                                        <small>Кол-во приёмов пищи: </small><small>4</small>
+                                                        <small>Кол-во приёмов пищи: </small><small>{{subscription.count_of_meals}}</small>
                                                     </div>
                                                     
                                                 </div>

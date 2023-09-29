@@ -12,6 +12,17 @@ def index(request):
 
 def lk(request, id):
     client = Client.objects.get(id=id)
+    subscription = client.subscriptions.filter(status=True).first()
+    count = 0
+    if subscription.breakfast:
+        count += 1
+    if subscription.dinner:
+        count += 1
+    if subscription.desserts:
+        count += 1
+    if subscription.lunch:
+        count += 1
+    subscription.count_of_meals = count
     if request.method == "POST":
         form = ClientForm(request.POST)
 
@@ -23,11 +34,9 @@ def lk(request, id):
 
             return redirect('lk', id=client.id)
 
-        else:
-            print('not valid')
     else:
         form = ClientForm()
-    context = {'form': form, 'client': client}
+    context = {'form': form, 'client': client, 'subscription': subscription}
     return render(request, 'lk.html', context=context)
 
 

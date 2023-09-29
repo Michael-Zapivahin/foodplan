@@ -82,5 +82,4 @@ class SubscriptionAllergy(models.Model):
     )
 
     def __str__(self):
-        return f'''{self.subscription.client.id}:{self.subscription.client.name}
-         - {self.allergy.title}:{self.allergy.title}'''
+        return f'{self.allergy.title}'
