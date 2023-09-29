@@ -37,7 +37,7 @@ def registration(request):
 
 
 def catalog(request):
-    context = {}
+    context = {'menu': Dish.objects.all()}
     return render(request, 'catalog.html', context=context)
 
 

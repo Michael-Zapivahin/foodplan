@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    <title>Каталог</title>
+{% endblock title %}
+
+{% block header-content %}
+    <a href="{% url 'auth' %}">
+        <button class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Войти</button>
+    </a>
+{% endblock header-content %}
+
+{% block main %}
+    <main style="margin-top: calc(2rem + 85px);">
+        <div class="row row-cols-5 row-cols-md-1 g-4" style="margin-left:20px; margin-top:5px;">
+            <div class="row">
+                {% for dish in menu %}
+                    <div class="card" style="width: 350px;">
+                        <a href="{% url 'card' id=dish.id %}">
+                            <img src="{{dish.photo.url}}" class="card-img-top">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                {{dish.title}}
+                            </h4>
+                            <br>
+                            <p class="card-text">
+                                {{dish.calories}} ккал
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+{% endblock main %}
