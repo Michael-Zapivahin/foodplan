@@ -26,11 +26,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index', views.index, name='index'),
     path('', views.index, name='index'),
-    # path('card/int:id/', views.card, name='card'),
-    path('card/', views.card, name='card'),
+    path('catalog/', views.catalog, name='catalog'),
+    path('card/<int:id>/', views.card, name='card'),
     path('order/', views.order, name='order'),
     path('auth/', views.auth, name='auth'),
     path('registration/', views.registration, name='registration'),
-    path('catalog/', views.catalog, name='catalog'),
     path('lk/', views.lk, name='lk'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

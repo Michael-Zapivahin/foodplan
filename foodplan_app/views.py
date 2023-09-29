@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Dish
 
@@ -41,15 +41,16 @@ def catalog(request):
     return render(request, 'catalog.html', context=context)
 
 
-def card(request):
-    dish = Dish.objects.all()[0]
+def card(request, id):
+    dish = get_object_or_404(Dish, id=id)
     context = {
-        'title': dish.title,
-        'descripion': dish.description,
-        'components': dish.components.all(),
-        'calories': dish.calories,
-        'photo': dish.photo,
+        'dish': {
+            'title': dish.title,
+            'descripion': dish.description,
+            'components': dish.components.all(),
+            'calories': dish.calories,
+            'photo': dish.photo,
+        },
     }
-    dish = {'dish': context}
-    return render(request, 'card.html', context=dish)
+    return render(request, 'card.html', context=context)
 
