@@ -56,7 +56,7 @@
                         <tr>
                             <th scope="row" class="text-start">Срок</th>
                             <td>
-                                <select class="form-select">
+                                <select name="select0" class="form-select">
                                     <option value="0" selected>1 мес.</option>
                                     <option value="1">3 мес.</option>
                                     <option value="2">6 мес.</option>
@@ -117,12 +117,14 @@
                             <th scope="row" class="text-start">Аллергии</th>
                             <td>
                                 {% for allergy in allergies %}
-                                <div class="form-check d-flex justify-content-start">
-                                    <input class="form-check-input me-1 foodplan_checked-green" type="checkbox" value="" name="allergy{{allergy.id}}">
-                                    <label class="form-check-label" for="allergy{{allergy.id}}">
-                                        {{ allergy.title }}
-                                    </label>
-                                </div>
+<!--                                <select name="{{ allergy.allergy_id }}" class="form-select">-->
+                                    <div class="form-check d-flex justify-content-start">
+                                        <input class="form-check-input me-1 foodplan_checked-green" type="checkbox" value="" name="allergy_{{allergy.id}}">
+                                        <label class="form-check-label" for="allergy_{{allergy.id}}">
+                                            {{ allergy.title }}
+                                        </label>
+                                    </div>
+<!--                                </select>-->
                                 {% endfor %}
                             </td>
                         </tr>
@@ -130,12 +132,11 @@
                 </table>
                 <button type="submit" id="TableSubmit" class="d-none"></button>
                 </form>
-
-                <form class="card d-flex flex-row align-items-baseline mb-5 p-3 foodplan__bg_grey">
-                    <label for="exampleInputPassword1" class="form-label me-2">Промокод</label>
-                    <input type="password" class="form-control me-2" id="password">
-                    <button type="submit" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Применить</button>
-                </form>
+<!--                <form class="card d-flex flex-row align-items-baseline mb-5 p-3 foodplan__bg_grey">-->
+<!--                    <label for="exampleInputPassword1" class="form-label me-2">Промокод</label>-->
+<!--                    <input type="password" class="form-control me-2" id="password">-->
+<!--                    <button type="submit" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Применить</button>-->
+<!--                </form>-->
                 <div class="d-flex justify-content-center my-5">
                     <button form="order" type="submit" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green w-50">Оплатить</button>
                 </div>
