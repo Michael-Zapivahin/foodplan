@@ -31,7 +31,11 @@
                                 <small class="link-secondary">Ингредиенты:</small>
                                 <ul class="list-group list-group-flush">
                                     {% for component in dish.components %}
-                                        <li class="list-group-item disabled"><small>{{component.title}} ({{component.weight}}.г)</small></li>
+                                        {% if component.weight %}
+                                            <li class="list-group-item disabled"><small>{{component.title}} ({{component.weight}}.г)</small></li>
+                                        {% else %}
+                                            <li class="list-group-item disabled"><small>{{component.title}} (По вкусу)</small></li>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                                 <small class="link-secondary">Общая калорийность: {{dish.calories}} ккал</small>
