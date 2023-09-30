@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 # Create your models here.
 
@@ -19,12 +20,31 @@ class Allergy(models.Model):
         return self.title
 
 
+class DishQuerySet(models.QuerySet):
+    def get_menu(self, subscription):
+        allergies = subscription.subscription_allergies.all().prefetch_related('allergy')
+        allergies_ids = [allergy.allergy.id for allergy in allergies.iterator()]
+        menu = self.filter(~Q(allergy_tags__tag__in=allergies_ids))
+        titles = []
+        if subscription.breakfast:
+            titles.append('Завтрак')
+        if subscription.lunch:
+            titles.append('Обед')
+        if subscription.dinner:
+            titles.append('Ужин')
+        if subscription.dinner:
+            titles.append('Десерт')
+        menu = menu.filter(tags__tag__title__in=titles).distinct()
+        return menu
+
+
 class Dish(models.Model):
     title = models.CharField(max_length=200, verbose_name='Title')
     description = models.TextField(blank=True, null=True, verbose_name='Description')
     photo = models.ImageField(max_length=200, verbose_name='Photo', blank=True, null=True)
     calories = models.IntegerField(blank=True, null=True, verbose_name='Calories')
 
+    objects = DishQuerySet.as_manager()
     def __str__(self):
         return self.title
 
@@ -83,3 +103,46 @@ class SubscriptionAllergy(models.Model):
 
     def __str__(self):
         return f'{self.allergy.title}'
+
+
+class Tag(models.Model):
+    title = models.CharField(max_length=50, verbose_name='Title', unique=True)
+
+    def __str__(self):
+        return self.title
+
+
+class DishTag(models.Model):
+    dish = models.ForeignKey(
+        Dish,
+        on_delete=models.DO_NOTHING,
+        related_name='tags',
+        verbose_name='Dish',
+    )
+    tag = models.ForeignKey(
+        Tag,
+        on_delete=models.DO_NOTHING,
+        related_name='tags',
+        verbose_name='Tag',
+    )
+
+    def __str__(self):
+        return f'{self.dish.title}: {self.tag.title}'
+
+
+class DishAllergyTag(models.Model):
+    dish = models.ForeignKey(
+        Dish,
+        on_delete=models.DO_NOTHING,
+        related_name='allergy_tags',
+        verbose_name='Dish',
+    )
+    tag = models.ForeignKey(
+        Allergy,
+        on_delete=models.DO_NOTHING,
+        related_name='allergy_tags',
+        verbose_name='Allergy tag',
+    )
+
+    def __str__(self):
+        return f'{self.dish.title}: {self.tag.title}'

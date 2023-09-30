@@ -8,9 +8,21 @@ from .models import (
     Client,
     Subscription,
     SubscriptionAllergy,
+    DishTag,
+    Tag,
+    DishAllergyTag,
 )
 
-# Register your models here.
+
+class TagInline(admin.TabularInline):
+    extra = 0
+    model = DishTag
+
+
+class AllergyTagInline(admin.TabularInline):
+    extra = 0
+    model = DishAllergyTag
+
 
 @admin.register(Dish)
 class DishAdmin(admin.ModelAdmin):
@@ -20,6 +32,7 @@ class DishAdmin(admin.ModelAdmin):
             url=dish.photo.url,
             height='100px',
         )
+    inlines = [TagInline, AllergyTagInline]
     image_tag.short_description = 'Photo'
     list_display = ['title', 'image_tag']
     ordering = ['title']
@@ -60,3 +73,22 @@ class SubscriptionAdmin(admin.ModelAdmin):
 class SubscriptionAllergyAdmin(admin.ModelAdmin):
     pass
 
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            if obj.title:
+                return ['title',]
+            return []
+        return []
+
+
+@admin.register(DishTag)
+class DishTagAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(DishAllergyTag)
+class DishTagAdmin(admin.ModelAdmin):
+    pass
