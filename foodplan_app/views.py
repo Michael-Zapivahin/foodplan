@@ -53,12 +53,7 @@ def auth(request):
 
 def registration(request):
     if request.method == 'POST':
-        print(request.POST)
-        registration = []
-        for key in request.POST:
-            registration.append({'key': key, 'value': request.POST[key]})
-        subscription, created = create_registration(registration)
-
+        subscription, created = create_registration(request.POST)
     return render(request, 'registration.html')
 
 
