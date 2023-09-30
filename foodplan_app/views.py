@@ -1,13 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-
 from .forms import ClientForm
 
-
-from .models import Dish, Allergy, Client
+from .models import Dish, Allergy, Client, Subscription
 from .db_operations import (create_subscription,
                             create_registration,
-                            get_authorization
+                            get_authorization,
                             )
 
 
