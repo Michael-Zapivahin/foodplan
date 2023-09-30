@@ -1,11 +1,15 @@
 from .models import Subscription, Allergy, Client, Menu
 
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 
-def get_authorization(authorization):
-    client = get_object_or_404(Client, mail=authorization['email'],  password=authorization['password'])
-    return client
+def get_authorization(email, password):
+    client = Client.objects.filter(mail=email)[0]
+    user = authenticate(username=client.name, password=password)
+    if user is not None:
+        return user
 
 
 def create_subscription(subscription):
@@ -76,12 +80,14 @@ def create_subscription(subscription):
 
 def create_registration(registration):
     if registration['password'] == registration['confirmation']:
-        subscription, created = Client.objects.get_or_create(
+        user = User.objects.create_user(registration['name'], registration['email'], registration['password'])
+        client, created = Client.objects.get_or_create(
             name=registration['name'],
             mail=registration['email'],
             login=registration['name'],
-            password=registration['password'],
+            password='',
         )
-        return subscription, created
+        return created, "The user successfully created"
     else:
-        return None, False
+        return False, f'Wrong password {registration["email"]}, retry input'
+
