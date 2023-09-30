@@ -3,11 +3,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import ClientForm
 
+
 from .models import Dish, Allergy, Client
 from .db_operations import (create_subscription,
                             create_registration,
                             get_authorization
                             )
+
+
+
 
 
 def index(request):
@@ -89,3 +93,9 @@ def card(request, id):
     }
     return render(request, 'card.html', context=context)
 
+
+def sorted_catalog(request, id):
+    subscription = get_object_or_404(Subscription, id=id)
+    menu = Dish.objects.get_menu(subscription)
+    context = {'menu': menu}
+    return render(request, 'catalog.html', context=context)
