@@ -89,8 +89,8 @@ def card(request, id):
     return render(request, 'card.html', context=context)
 
 
-def sorted_catalog(request, id):
-    subscription = get_object_or_404(Subscription, id=id)
+def sorted_catalog(request, id_):
+    subscription = get_object_or_404(Subscription, id=id_)
     menu = Dish.objects.get_menu(subscription)
     context = {'menu': menu}
     return render(request, 'catalog.html', context=context)
