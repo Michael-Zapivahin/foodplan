@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ClientForm
 
 from .models import Dish, Allergy, Client
-from .db_operations import create_subscription
+from .db_operations import create_subscription, create_registration
 
 
 def index(request):
@@ -47,7 +47,6 @@ def order(request):
         for key in request.POST:
             subscription.append({'key': key, 'value': request.POST[key]})
         subscription, created = create_subscription(subscription)
-        print(subscription, created)
 
     allergies = Allergy.objects.all()
     context = []
@@ -64,6 +63,12 @@ def auth(request):
 def registration(request):
     if request.method == 'POST':
         print(request.POST)
+
+        registration = []
+        for key in request.POST:
+            registration.append({'key': key, 'value': request.POST[key]})
+        subscription, created = create_registration(registration)
+
     return render(request, 'registration.html')
 
 
