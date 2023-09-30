@@ -59,7 +59,7 @@ def order(request):
 
 def auth(request):
     if request.method == 'POST':
-        authorization, created = get_authorization(request.POST)
+        authorization = get_authorization(request.POST)
     return render(request, 'auth.html')
 
 
