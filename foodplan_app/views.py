@@ -9,9 +9,6 @@ from .db_operations import (create_subscription,
                             )
 
 
-
-
-
 def index(request):
     return render(request, 'index.html')
 
