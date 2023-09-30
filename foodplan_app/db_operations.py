@@ -9,7 +9,9 @@ def get_authorization(email, password):
     client = Client.objects.filter(mail=email)[0]
     user = authenticate(username=client.name, password=password)
     if user is not None:
-        return user
+        return True, user.pk
+    else:
+        return False, 0
 
 
 def create_subscription(subscription):

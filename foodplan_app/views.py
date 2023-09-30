@@ -58,9 +58,14 @@ def order(request):
 
 
 def auth(request):
+    authorization, user_id = False, 0
     if request.method == 'POST':
-        authorization = get_authorization(request.POST['email'], request.POST['password'])
-    return render(request, 'auth.html')
+        authorization, user_id = get_authorization(request.POST['email'], request.POST['password'])
+    print(authorization, user_id)
+    if authorization:
+        lk(request, user_id)
+    else:
+        return render(request, 'auth.html')
 
 
 def registration(request):
