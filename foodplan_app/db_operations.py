@@ -68,3 +68,16 @@ def create_subscription(subscription):
     )
     return subscription, created
 
+
+def create_registration(registration):
+    print(registration)
+    if registration['password'] == registration['confirmation']:
+        subscription, created = Client.objects.get_or_create(
+            name=registration['name'],
+            mail=registration['email'],
+            login=registration['name'],
+            password=registration['password'],
+        )
+        return subscription, created
+    else:
+        return None, False
