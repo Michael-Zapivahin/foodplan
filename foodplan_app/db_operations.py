@@ -3,6 +3,11 @@ from .models import Subscription, Allergy, Client, Menu
 from django.shortcuts import get_object_or_404
 
 
+def get_authorization(authorization):
+    client = get_object_or_404(Client, mail=authorization['email'],  password=authorization['password'])
+    return client
+
+
 def create_subscription(subscription):
     cost_per_month = 100
     client = get_object_or_404(Client, pk=1)
@@ -70,7 +75,6 @@ def create_subscription(subscription):
 
 
 def create_registration(registration):
-    print(registration)
     if registration['password'] == registration['confirmation']:
         subscription, created = Client.objects.get_or_create(
             name=registration['name'],

@@ -4,7 +4,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ClientForm
 
 from .models import Dish, Allergy, Client
-from .db_operations import create_subscription, create_registration
+from .db_operations import (create_subscription,
+                            create_registration,
+                            get_authorization
+                            )
 
 
 def index(request):
@@ -47,7 +50,8 @@ def order(request):
 
 
 def auth(request):
-    # input : mail, password
+    if request.method == 'POST':
+        authorization, created = get_authorization(request.POST)
     return render(request, 'auth.html')
 
 
