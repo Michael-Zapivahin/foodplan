@@ -59,13 +59,13 @@ def order(request):
 
 def auth(request):
     if request.method == 'POST':
-        authorization = get_authorization(request.POST)
+        authorization = get_authorization(request.POST['email'], request.POST['password'])
     return render(request, 'auth.html')
 
 
 def registration(request):
     if request.method == 'POST':
-        subscription, created = create_registration(request.POST)
+        created, message = create_registration(request.POST)
 
     return render(request, 'registration.html')
 
