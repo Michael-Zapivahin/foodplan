@@ -9,7 +9,7 @@ def get_authorization(email, password):
     client = Client.objects.filter(mail=email)[0]
     user = authenticate(username=client.name, password=password)
     if user is not None:
-        return True, user.pk
+        return True, client.pk
     else:
         return False, 0
 

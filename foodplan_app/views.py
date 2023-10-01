@@ -15,14 +15,16 @@ def index(request):
 
 
 def lk(request, id):
-    # client = get_object_or_404(Client, id=id)
+    if not request.user.is_authenticated:
+        return redirect('registration')
+
     try:
         client = Client.objects.get(id=id)
     except Client.DoesNotExist:
         return redirect('registration')
+
     subscription = client.subscriptions.filter(status=True).first()
     subscription = get_count_of_meals(subscription)
-
 
     if request.method == "POST":
         form = ClientForm(request.POST)
@@ -56,12 +58,16 @@ def order(request):
 
 
 def auth(request):
-    authorization, user_id = False, 0
+    authorization, client_id = False, 0
     if request.method == 'POST':
-        authorization, user_id = get_authorization(request.POST['email'], request.POST['password'])
-    print(authorization, user_id)
+        authorization, client_id = get_authorization(request.POST['email'], request.POST['password'])
     if authorization:
-        lk(request, user_id)
+        client = get_object_or_404(Client, pk=client_id)
+        subscription = client.subscriptions.filter(status=True).first()
+        subscription = get_count_of_meals(subscription)
+        form = ClientForm()
+        context = {'form': form, 'client': client, 'subscription': subscription}
+        return render(request, 'lk.html', context=context)
     else:
         return render(request, 'auth.html')
 
