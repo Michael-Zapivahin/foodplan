@@ -1,4 +1,4 @@
-from .models import Subscription, Allergy, Client, Menu
+from .models import Subscription, Allergy, Client, Menu, SubscriptionAllergy
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
@@ -6,7 +6,11 @@ from django.contrib.auth import authenticate
 
 
 def get_authorization(email, password):
-    client = Client.objects.filter(mail=email)[0]
+    clients = Client.objects.filter(mail=email)
+    if clients:
+        client = clients[0]
+    else:
+        return False, 0
     user = authenticate(username=client.name, password=password)
     if user is not None:
         return True, client.pk
@@ -55,11 +59,9 @@ def create_subscription(subscription):
             description += f' for {persons} persons'
         elif key.find('allergy_') > 0:
             try:
-                allergy_id = key.split('_')[1]
+                allergies.append(key.split('_')[1])
             except:
                 print(f'error {key}')
-                allergy_id = 1
-            allergies.append(get_object_or_404(Allergy, pk=allergy_id))
 
     print(breakfast, lunch, dinner, dessert, description)
 
@@ -72,11 +74,13 @@ def create_subscription(subscription):
         dinner=dinner,
         desserts=dessert,
         persons_number=persons,
-        # allergy=allergy,
         cost=cost_per_month * term,
         client=client,
         menu=menu
     )
+    for allergy_id in allergies:
+        allergy = get_object_or_404(Allergy, pk=allergy_id)
+        SubscriptionAllergy.objects.get_or_create(subscription=subscription, allergy=allergy)
     return subscription, created
 
 
@@ -88,6 +92,7 @@ def create_registration(registration):
             mail=registration['email'],
             login=registration['name'],
             password='',
+            user=user,
         )
         return created, "The user successfully created"
     else:

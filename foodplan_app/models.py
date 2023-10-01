@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q
+from django.conf import settings
 
 # Create your models here.
 
@@ -64,6 +65,7 @@ class Client(models.Model):
     password = models.CharField(max_length=200, verbose_name='Password')
     mail = models.EmailField(max_length=200, verbose_name='Mail', help_text='example@mail.ru')
     avatar = models.ImageField(blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.name} ({self.login})'
