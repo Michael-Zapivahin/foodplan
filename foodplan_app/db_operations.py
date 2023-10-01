@@ -2,16 +2,20 @@ from .models import Subscription, Allergy, Client, Menu, SubscriptionAllergy
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 
-def get_authorization(email, password):
+def get_authorization(request, email, password):
     clients = Client.objects.filter(mail=email)
     if clients:
         client = clients[0]
     else:
         return False, 0
+
     user = authenticate(username=client.name, password=password)
+    if user is not None:
+        login(request, user)
+
     if user is not None:
         return True, client.pk
     else:
@@ -62,8 +66,6 @@ def create_subscription(subscription):
                 allergies.append(key.split('_')[1])
             except:
                 print(f'error {key}')
-
-    print(breakfast, lunch, dinner, dessert, description)
 
     subscription, created = Subscription.objects.get_or_create(
         title=f'Subscription for {term} months',

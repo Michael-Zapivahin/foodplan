@@ -60,12 +60,13 @@ def order(request):
 def auth(request):
     authorization, client_id = False, 0
     if request.method == 'POST':
-        authorization, client_id = get_authorization(request.POST['email'], request.POST['password'])
+        authorization, client_id = get_authorization(request, request.POST['email'], request.POST['password'])
     if authorization:
         client = get_object_or_404(Client, pk=client_id)
         subscription = client.subscriptions.filter(status=True).first()
         subscription = get_count_of_meals(subscription)
-        form = ClientForm()
+        form = ClientForm(request.POST)
+        print(client, subscription)
         context = {'form': form, 'client': client, 'subscription': subscription}
         return render(request, 'lk.html', context=context)
     else:
