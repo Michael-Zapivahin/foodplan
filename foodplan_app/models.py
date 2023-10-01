@@ -82,7 +82,6 @@ class Subscription(models.Model):
     persons_number = models.IntegerField(verbose_name='Numer of persons', default=1)
     cost = models.FloatField(blank=True, null=True, verbose_name='Cost')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='subscriptions')
-    menu = models.ForeignKey(Menu, on_delete=models.DO_NOTHING, related_name='subscriptions')
     status = models.BooleanField(default=True, verbose_name='Active')
 
     def __str__(self):
