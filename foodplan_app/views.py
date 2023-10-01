@@ -6,6 +6,7 @@ from .models import Dish, Allergy, Client, Subscription
 from .db_operations import (create_subscription,
                             create_registration,
                             get_authorization,
+                            get_count_of_meals,
                             )
 
 
@@ -14,18 +15,15 @@ def index(request):
 
 
 def lk(request, id):
-    client = Client.objects.get(id=id)
+    # client = get_object_or_404(Client, id=id)
+    try:
+        client = Client.objects.get(id=id)
+    except Client.DoesNotExist:
+        return redirect('registration')
     subscription = client.subscriptions.filter(status=True).first()
-    count = 0
-    if subscription.breakfast:
-        count += 1
-    if subscription.dinner:
-        count += 1
-    if subscription.desserts:
-        count += 1
-    if subscription.lunch:
-        count += 1
-    subscription.count_of_meals = count
+    subscription = get_count_of_meals(subscription)
+
+
     if request.method == "POST":
         form = ClientForm(request.POST)
 

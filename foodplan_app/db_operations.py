@@ -93,3 +93,18 @@ def create_registration(registration):
     else:
         return False, f'Wrong password {registration["email"]}, retry input'
 
+
+def get_count_of_meals(subscription):
+    if not subscription:
+        return None
+    count = 0
+    if subscription.breakfast:
+        count += 1
+    if subscription.dinner:
+        count += 1
+    if subscription.desserts:
+        count += 1
+    if subscription.lunch:
+        count += 1
+    subscription.count_of_meals = count
+    return subscription
