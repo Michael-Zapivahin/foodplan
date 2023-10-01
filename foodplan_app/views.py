@@ -48,7 +48,10 @@ def order(request):
         subscription = []
         for key in request.POST:
             subscription.append({'key': key, 'value': request.POST[key]})
-        subscription, created = create_subscription(subscription)
+
+        print(subscription, request.user)
+        create_subscription(subscription, request.user)
+        return render(request, 'order.html')
 
     allergies = Allergy.objects.all()
     context = []

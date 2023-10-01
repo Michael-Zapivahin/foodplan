@@ -22,10 +22,8 @@ def get_authorization(request, email, password):
         return False, 0
 
 
-def create_subscription(subscription):
+def create_subscription(subscription, user):
     cost_per_month = 100
-    client = get_object_or_404(Client, pk=1)
-    menu = get_object_or_404(Menu, pk=1)
     terms = {
         '0': 1,
         '1': 3,
@@ -40,7 +38,6 @@ def create_subscription(subscription):
     term = 1
     allergies = []
     description = ''
-    print(subscription)
     for item in subscription:
         key = item['key']
         if key == 'select0':
@@ -61,11 +58,13 @@ def create_subscription(subscription):
         elif key == 'select5':
             persons = int(item['value']) + 1
             description += f' for {persons} persons'
-        elif key.find('allergy_') > 0:
-            try:
-                allergies.append(key.split('_')[1])
-            except:
-                print(f'error {key}')
+        elif key.find('allergy') >= 0:
+            values = key.split('_')
+            allergies.append(values[1])
+
+    clients = Client.objects.filter(user=user)
+    if clients:
+        client = clients[0]
 
     subscription, created = Subscription.objects.get_or_create(
         title=f'Subscription for {term} months',
@@ -78,10 +77,12 @@ def create_subscription(subscription):
         persons_number=persons,
         cost=cost_per_month * term,
         client=client,
-        menu=menu
     )
+
     for allergy_id in allergies:
-        allergy = get_object_or_404(Allergy, pk=allergy_id)
+        allergies = Allergy.objects.filter(pk=int(allergy_id))
+        if clients:
+            allergy = allergies[0]
         SubscriptionAllergy.objects.get_or_create(subscription=subscription, allergy=allergy)
     return subscription, created
 
