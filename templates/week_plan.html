@@ -35,7 +35,7 @@
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Обед</p>
-                        <a href="{% url 'card' id=day.breakfast.id %}">
+                        <a href="{% url 'card' id=day.lunch.id %}">
                             <img src="{{ day.lunch.photo.url}}" class="card-img-top">
                         </a>
                         <div class="card-body">
@@ -53,7 +53,7 @@
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Десерт</p>
-                        <a href="{% url 'card' id=day.breakfast.id %}">
+                        <a href="{% url 'card' id=day.dessert.id %}">
                             <img src="{{ day.dessert.photo.url}}" class="card-img-top">
                         </a>
                         <div class="card-body">
@@ -71,7 +71,7 @@
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Ужин</p>
-                        <a href="{% url 'card' id=day.breakfast.id %}">
+                        <a href="{% url 'card' id=day.dinner.id %}">
                             <img src="{{ day.dinner.photo.url }}" class="card-img-top">
                         </a>
                         <div class="card-body">
