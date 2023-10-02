@@ -145,6 +145,10 @@ def week_catalog(request):
     if not request.user.is_authenticated or 'subscription' not in request.session:
         return redirect('registration')
     subscription = get_deserialize_subscription(request.session['subscription'])
+
+    if not subscription:
+        client = request.user.client.first()
+        subscription = Subscription.objects.filter(client=client, status=True).first()
     week = get_week_menu(subscription)
     context = {'week': week}
     return render(request, 'week_plan.html', context=context)
