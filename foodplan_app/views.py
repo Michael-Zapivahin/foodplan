@@ -82,8 +82,11 @@ def order(request):
 
     allergies = Allergy.objects.all()
     context = []
-    for allergy in allergies:
-        context.append({'title': allergy.title, 'id': allergy.id})
+    if allergies:
+        for allergy in allergies:
+            context.append({'title': allergy.title, 'id': allergy.id})
+    else:
+        context = None
     return render(request, 'order.html', context={'allergies': context})
 
 
