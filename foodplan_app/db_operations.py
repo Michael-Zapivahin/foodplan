@@ -184,7 +184,7 @@ def get_week_menu(subscription):
             try:
                 dinner = choice(choice_dinners)
             except IndexError:
-                choice_desserts = desserts
+                choice_dinners = dinners
                 dinner = choice(choice_dinners)
 
         dayle_menu = {
