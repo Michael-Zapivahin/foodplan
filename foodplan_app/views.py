@@ -28,6 +28,9 @@ def lk(request):
         return redirect('auth')
     subscription = get_deserialize_subscription(request.session['subscription'])
 
+    if not subscription:
+        subscription = client.subscriptions.filter(status=True).first()
+
     if request.method == "POST":
         form = ClientForm(request.POST, user=request.user)
 
