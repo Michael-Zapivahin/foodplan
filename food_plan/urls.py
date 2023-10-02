@@ -33,4 +33,5 @@ urlpatterns = [
     path('auth/', views.auth, name='auth'),
     path('registration/', views.registration, name='registration'),
     path('lk/', views.lk, name='lk'),
+    path('week-catalog/', views.week_catalog, name='week_plan')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
