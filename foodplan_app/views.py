@@ -70,8 +70,8 @@ def order(request):
 
                 create_pay = pay(price, phone, email, title, order_number)
 
-                if create_pay.cancellation_details is None:
-                    delete_subscription(subscription)
+                # if create_pay.cancellation_details is None:
+                #     delete_subscription(subscription)
 
                 url = create_pay["confirmation"]["confirmation_url"]
                 return redirect(url)
