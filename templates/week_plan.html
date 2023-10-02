@@ -17,7 +17,9 @@
                 <div class="row">
                     <div class="card" style="width: 350px;">
                         <p>Завтрак</p>
-                        <img src="{{ day.breakfast.photo.url}}" class="card-img-top">
+                        <a href="{% url 'card' id=day.breakfast.id %}">
+                            <img src="{{ day.breakfast.photo.url}}" class="card-img-top">
+                        </a>
                         <div class="card-body">
                             {% if day.breakfast %}
                                 {{ day.breakfast }}
@@ -33,7 +35,9 @@
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Обед</p>
-                        <img src="{{ day.lunch.photo.url}}" class="card-img-top">
+                        <a href="{% url 'card' id=day.breakfast.id %}">
+                            <img src="{{ day.lunch.photo.url}}" class="card-img-top">
+                        </a>
                         <div class="card-body">
                             {% if day.lunch %}
                                 {{ day.lunch }}
@@ -49,7 +53,9 @@
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Десерт</p>
-                        <img src="{{ day.dessert.photo.url}}" class="card-img-top">
+                        <a href="{% url 'card' id=day.breakfast.id %}">
+                            <img src="{{ day.dessert.photo.url}}" class="card-img-top">
+                        </a>
                         <div class="card-body">
                             {% if day.dessert %}
                                 {{ day.dessert }}
@@ -65,7 +71,9 @@
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Ужин</p>
-                        <img src="{{ day.dinner.photo.url }}" class="card-img-top">
+                        <a href="{% url 'card' id=day.breakfast.id %}">
+                            <img src="{{ day.dinner.photo.url }}" class="card-img-top">
+                        </a>
                         <div class="card-body">
                             {% if day.dinner %}
                                 {{ day.dinner }}
