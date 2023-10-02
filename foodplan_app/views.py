@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 from .forms import ClientForm
 from .models import Dish, Allergy, Client, Subscription
+from .payment import pay
 from .db_operations import (create_subscription,
                             create_registration,
                             get_authorization,
@@ -52,12 +53,23 @@ def lk(request):
 
 def order(request):
     if request.method == 'POST':
+
         subscription = []
         for key in request.POST:
             subscription.append({'key': key, 'value': request.POST[key]})
 
-        print(subscription, request.user)
-        create_subscription(subscription, request.user)
+        subscription, created = create_subscription(subscription, request.user)
+        if created:
+                price = subscription.cost
+                phone = '9778107777'
+                email = subscription.client.mail
+                title = subscription.title
+                order_number = subscription.pk
+
+                create_pay = pay(price, phone, email, title, order_number)
+                print(create_pay)
+                url = create_pay["confirmation"]["confirmation_url"]
+                return redirect(url)
         return render(request, 'order.html')
 
     allergies = Allergy.objects.all()
