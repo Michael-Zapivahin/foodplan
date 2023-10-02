@@ -17,11 +17,11 @@
                 <div class="row">
                     <div class="card" style="width: 350px;">
                         <p>Завтрак</p>
-                        <a href="{% url 'card' id=day.breakfast.id %}">
-                            <img src="{{ day.breakfast.photo.url}}" class="card-img-top">
-                        </a>
-                        <div class="card-body">
-                            {% if day.breakfast %}
+                        {% if day.breakfast %}
+                            <a href="{% url 'card' id=day.breakfast.id %}">
+                                <img src="{{ day.breakfast.photo.url}}" class="card-img-top">
+                            </a>
+                            <div class="card-body">
                                 {{ day.breakfast }}
                             <h4 class="card-title">
                                 {{day.breakfast.title}}
@@ -35,11 +35,11 @@
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Обед</p>
-                        <a href="{% url 'card' id=day.lunch.id %}">
-                            <img src="{{ day.lunch.photo.url}}" class="card-img-top">
-                        </a>
-                        <div class="card-body">
-                            {% if day.lunch %}
+                        {% if day.lunch %}
+                            <a href="{% url 'card' id=day.lunch.id %}">
+                                <img src="{{ day.lunch.photo.url}}" class="card-img-top">
+                            </a>
+                            <div class="card-body">
                                 {{ day.lunch }}
                             <h4 class="card-title">
                                 {{day.lunch.title}}
@@ -53,11 +53,11 @@
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Десерт</p>
-                        <a href="{% url 'card' id=day.dessert.id %}">
-                            <img src="{{ day.dessert.photo.url}}" class="card-img-top">
-                        </a>
-                        <div class="card-body">
-                            {% if day.dessert %}
+                        {% if day.dessert %}
+                            <a href="{% url 'card' id=day.dessert.id %}">
+                                <img src="{{ day.dessert.photo.url}}" class="card-img-top">
+                            </a>
+                            <div class="card-body">
                                 {{ day.dessert }}
                             <h4 class="card-title">
                                 {{day.dessert.title}}
@@ -71,11 +71,11 @@
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Ужин</p>
-                        <a href="{% url 'card' id=day.dinner.id %}">
-                            <img src="{{ day.dinner.photo.url }}" class="card-img-top">
-                        </a>
+                        {% if day.dinner %}
+                            <a href="{% url 'card' id=day.dinner.id %}">
+                                <img src="{{ day.dinner.photo.url }}" class="card-img-top">
+                            </a>
                         <div class="card-body">
-                            {% if day.dinner %}
                                 {{ day.dinner }}
                                 <h4 class="card-title">
                                     {{day.dinner.title}}
