@@ -32,5 +32,5 @@ urlpatterns = [
     path('order/', views.order, name='order'),
     path('auth/', views.auth, name='auth'),
     path('registration/', views.registration, name='registration'),
-    path('lk/<int:id>/', views.lk, name='lk'),
+    path('lk/', views.lk, name='lk'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
