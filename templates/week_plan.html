@@ -23,15 +23,15 @@
                             </a>
                             <div class="card-body">
                                 {{ day.breakfast }}
-                            <h4 class="card-title">
-                                {{day.breakfast.title}}
-                            </h4>
-                            <br>
-                            <p class="card-text">
-                                {{day.breakfast.calories}} ккал
-                            </p>
-                            {% endif %}
-                        </div>
+                                <h4 class="card-title">
+                                    {{day.breakfast.title}}
+                                </h4>
+                                <br>
+                                <p class="card-text">
+                                    {{day.breakfast.calories}} ккал
+                                </p>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Обед</p>
@@ -41,15 +41,15 @@
                             </a>
                             <div class="card-body">
                                 {{ day.lunch }}
-                            <h4 class="card-title">
-                                {{day.lunch.title}}
-                            </h4>
-                            <br>
-                            <p class="card-text">
-                                {{day.lunch.calories}} ккал
-                            </p>
-                            {% endif %}
-                        </div>
+                                <h4 class="card-title">
+                                    {{day.lunch.title}}
+                                </h4>
+                                <br>
+                                <p class="card-text">
+                                    {{day.lunch.calories}} ккал
+                                </p>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Десерт</p>
@@ -66,8 +66,8 @@
                             <p class="card-text">
                                 {{day.dessert.calories}} ккал
                             </p>
-                            {% endif %}
-                        </div>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="card" style="width: 350px;">
                         <p>Ужин</p>
@@ -75,7 +75,7 @@
                             <a href="{% url 'card' id=day.dinner.id %}">
                                 <img src="{{ day.dinner.photo.url }}" class="card-img-top">
                             </a>
-                        <div class="card-body">
+                            <div class="card-body">
                                 {{ day.dinner }}
                                 <h4 class="card-title">
                                     {{day.dinner.title}}
@@ -84,8 +84,8 @@
                                 <p class="card-text">
                                     {{day.dinner.calories}} ккал
                                 </p>
-                            {% endif %}
-                        </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
