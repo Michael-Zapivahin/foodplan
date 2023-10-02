@@ -9,6 +9,7 @@ Pillow==9.5.0
 environs[django]==9.3.2
 phonenumbers==8.13.13
 requests==2.31.0
+yookassa==2.4.0
 
 
 
