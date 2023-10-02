@@ -42,7 +42,7 @@ def pay(price, phone, email, title, order_number):
 
     builder = PaymentRequestBuilder()
     builder.set_amount({"value": price, "currency": Currency.RUB}) \
-        .set_confirmation({"type": ConfirmationType.REDIRECT, "return_url": "http://195.80.50.84:8000/order/"}) \
+        .set_confirmation({"type": ConfirmationType.REDIRECT, "return_url": "http://195.80.50.84:8000/lk/"}) \
         .set_capture(False) \
         .set_description(title) \
         .set_metadata({"orderNumber": order_number}) \
