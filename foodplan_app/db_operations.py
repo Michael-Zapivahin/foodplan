@@ -3,6 +3,7 @@ from .models import Subscription, Allergy, Client, Menu, SubscriptionAllergy
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.core.serializers import serialize, deserialize
 
 
 def get_authorization(request, email, password):
@@ -102,7 +103,7 @@ def create_registration(registration):
         return False, f'Wrong password {registration["email"]}, retry input'
 
 
-def get_count_of_meals(subscription):
+def get_json_subscription(subscription):
     if not subscription:
         return None
     count = 0
@@ -115,4 +116,13 @@ def get_count_of_meals(subscription):
     if subscription.lunch:
         count += 1
     subscription.count_of_meals = count
-    return subscription
+    json_subscription = serialize('json', [subscription])
+    return json_subscription
+
+
+def get_deserialize_subscription(session_json_subscription):
+    if session_json_subscription:
+        for obj in deserialize('json', session_json_subscription):
+            subscription = obj.object
+            return subscription
+    return None
