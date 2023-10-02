@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
 
 from .forms import ClientForm
 from .models import Dish, Allergy, Client, Subscription
@@ -25,18 +26,26 @@ def lk(request):
     subscription = get_deserialize_subscription(request.session['subscription'])
 
     if request.method == "POST":
-        form = ClientForm(request.POST)
+        form = ClientForm(request.POST, user=request.user)
 
         if form.is_valid():
             name = form.cleaned_data['name']
             mail = form.cleaned_data['mail']
             password = form.cleaned_data['password']
             Client.objects.filter(user=request.user).update(name=name, mail=mail, password=password)
-
+            user = User.objects.get(
+                username=request.user.username,
+                email=request.user.email,
+                password=request.user.password,
+            )
+            user.username = name
+            user.email = mail
+            user.set_password(password)
+            user.save()
             return redirect('lk')
 
     else:
-        form = ClientForm()
+        form = ClientForm(user=request.user)
     context = {'form': form, 'client': client, 'subscription': subscription}
     return render(request, 'lk.html', context=context)
 
