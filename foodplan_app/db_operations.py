@@ -1,4 +1,6 @@
-from .models import Subscription, Allergy, Client, Menu, SubscriptionAllergy
+from random import choice
+
+from .models import Subscription, Allergy, Client, Menu, SubscriptionAllergy, Dish
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
@@ -103,8 +105,6 @@ def create_registration(registration):
         return False, f'Wrong password {registration["email"]}, retry input'
 
 
-
-
 def get_json_subscription(subscription):
     if not subscription:
         return None
@@ -132,3 +132,69 @@ def get_deserialize_subscription(session_json_subscription):
 
 def delete_subscription(subscription):
     Subscription.objects.filter(id=subscription.id).delete()
+
+
+def get_week_menu(subscription):
+    menu = Dish.objects.get_menu(subscription)
+    days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
+    week = []
+    breakfasts = []
+    lunches = []
+    desserts = []
+    dinners = []
+    breakfast = None
+    lunch = None
+    dessert = None
+    dinner = None
+
+    if subscription.breakfast:
+        breakfasts = menu.filter(tags__tag__title='Завтрак')
+    if subscription.lunch:
+        lunches = menu.filter(tags__tag__title='Обед')
+    if subscription.desserts:
+        desserts = menu.filter(tags__tag__title='Ужин')
+    if subscription.dinner:
+        dinners = menu.filter(tags__tag__title='Десерт')
+
+    choice_breakfasts = breakfasts
+    choice_lunches = lunches
+    choice_desserts = desserts
+    choice_dinners = dinners
+
+    for day in days:
+        if choice_breakfasts:
+            try:
+                breakfast = choice(choice_breakfasts)
+            except IndexError:
+                choice_breakfasts = breakfasts
+                breakfast = choice(choice_breakfasts)
+        if choice_lunches:
+            try:
+                lunch = choice(choice_lunches)
+            except IndexError:
+                choice_lunches = lunches
+                lunch = choice(choice_lunches)
+        if choice_desserts:
+            try:
+                dessert = choice(choice_desserts)
+            except IndexError:
+                choice_desserts = desserts
+                dessert = choice(choice_desserts)
+        if choice_dinners:
+            try:
+                dinner = choice(choice_dinners)
+            except IndexError:
+                choice_desserts = desserts
+                dinner = choice(choice_dinners)
+
+        dayle_menu = {
+            'title': day,
+            'breakfast': breakfast,
+            'lunch': lunch,
+            'dessert': dessert,
+            'dinner': dinner,
+        }
+        week.append(dayle_menu)
+
+    return week
+

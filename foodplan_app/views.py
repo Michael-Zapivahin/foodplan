@@ -10,6 +10,7 @@ from .db_operations import (create_subscription,
                             get_json_subscription,
                             get_deserialize_subscription,
                             delete_subscription,
+                            get_week_menu,
                             )
 
 
@@ -132,3 +133,12 @@ def sorted_catalog(request, id):
     menu = Dish.objects.get_menu(subscription)
     context = {'menu': menu}
     return render(request, 'catalog.html', context=context)
+
+
+def week_catalog(request):
+    if not request.user.is_authenticated or 'subscription' not in request.session:
+        return redirect('registration')
+    subscription = get_deserialize_subscription(request.session['subscription'])
+    week = get_week_menu(subscription)
+    context = {'week': week}
+    return render(request, 'week_plan.html', context=context)

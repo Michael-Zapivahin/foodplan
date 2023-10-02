@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    <title>План на неделю</title>
+{% endblock title %}
+{% block header-content %}
+    <a href="{% url 'index' %}">
+        <button class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Выйти</button>
+    </a>
+{% endblock header-content %}
+
+{% block main %}
+    <main style="margin-top: calc(2rem + 85px);">
+        <div class="row row-cols-4 row-cols-md-1 g-4" style="margin-left:20px; margin-top:5px;">
+            {% for day in week %}
+                <p>{{ day.title }}</p>
+                <div class="row">
+                    <div class="card" style="width: 350px;">
+                        <p>Завтрак</p>
+                        <img src="{{ day.breakfast.photo.url}}" class="card-img-top">
+                        <div class="card-body">
+                            {% if day.breakfast %}
+                                {{ day.breakfast }}
+                            <h4 class="card-title">
+                                {{day.breakfast.title}}
+                            </h4>
+                            <br>
+                            <p class="card-text">
+                                {{day.breakfast.calories}} ккал
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card" style="width: 350px;">
+                        <p>Обед</p>
+                        <img src="{{ day.lunch.photo.url}}" class="card-img-top">
+                        <div class="card-body">
+                            {% if day.lunch %}
+                                {{ day.lunch }}
+                            <h4 class="card-title">
+                                {{day.lunch.title}}
+                            </h4>
+                            <br>
+                            <p class="card-text">
+                                {{day.lunch.calories}} ккал
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card" style="width: 350px;">
+                        <p>Десерт</p>
+                        <img src="{{ day.dessert.photo.url}}" class="card-img-top">
+                        <div class="card-body">
+                            {% if day.dessert %}
+                                {{ day.dessert }}
+                            <h4 class="card-title">
+                                {{day.dessert.title}}
+                            </h4>
+                            <br>
+                            <p class="card-text">
+                                {{day.dessert.calories}} ккал
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card" style="width: 350px;">
+                        <p>Ужин</p>
+                        <img src="{{ day.dinner.photo.url }}" class="card-img-top">
+                        <div class="card-body">
+                            {% if day.dinner %}
+                                {{ day.dinner }}
+                                <h4 class="card-title">
+                                    {{day.dinner.title}}
+                                </h4>
+                                <br>
+                                <p class="card-text">
+                                    {{day.dinner.calories}} ккал
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock main %}

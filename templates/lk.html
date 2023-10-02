@@ -97,6 +97,9 @@
                                                 <a href="{% url 'sorted_catalog' id=subscription.id %}">
                                                     <img src="{% static 'img/circle1.png' %}" alt="" class="w-100">
                                                 </a>
+                                                <a href="{% url 'week_plan' %}">
+                                                    <p>Недельное меню </p>
+                                                </a>
                                             {% else %}
                                                 <img src="{% static 'img/circle1.png' %}" alt="" class="w-100">
                                             {% endif %}
