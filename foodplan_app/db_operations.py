@@ -103,6 +103,8 @@ def create_registration(registration):
         return False, f'Wrong password {registration["email"]}, retry input'
 
 
+
+
 def get_json_subscription(subscription):
     if not subscription:
         return None
@@ -126,3 +128,7 @@ def get_deserialize_subscription(session_json_subscription):
             subscription = obj.object
             return subscription
     return None
+
+
+def delete_subscription(subscription):
+    Subscription.objects.filter(id=subscription.id).delete()

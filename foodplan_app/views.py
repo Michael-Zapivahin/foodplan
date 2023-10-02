@@ -9,6 +9,7 @@ from .db_operations import (create_subscription,
                             get_authorization,
                             get_json_subscription,
                             get_deserialize_subscription,
+                            delete_subscription,
                             )
 
 
@@ -67,7 +68,10 @@ def order(request):
                 order_number = subscription.pk
 
                 create_pay = pay(price, phone, email, title, order_number)
-                print(create_pay)
+
+                if create_pay.cancellation_details is None:
+                    delete_subscription(subscription)
+
                 url = create_pay["confirmation"]["confirmation_url"]
                 return redirect(url)
         return render(request, 'order.html')

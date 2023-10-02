@@ -42,7 +42,7 @@ def pay(price, phone, email, title, order_number):
 
     builder = PaymentRequestBuilder()
     builder.set_amount({"value": price, "currency": Currency.RUB}) \
-        .set_confirmation({"type": ConfirmationType.REDIRECT, "return_url": "http://195.80.50.84:8000"}) \
+        .set_confirmation({"type": ConfirmationType.REDIRECT, "return_url": "http://195.80.50.84:8000/order/"}) \
         .set_capture(False) \
         .set_description(title) \
         .set_metadata({"orderNumber": order_number}) \
@@ -55,3 +55,14 @@ def pay(price, phone, email, title, order_number):
     result = json.loads(res.json())
 
     return result
+
+
+def check_pay(pay_id):
+    res = Payment.find_one(pay_id)
+    print(res)
+
+
+if __name__ == '__main__':
+    Configuration.account_id = env.int('ACCOUT_ID')
+    Configuration.secret_key = env.str('U_KASSA_TOKEN')
+    check_pay('2cac7e17-000f-5000-a000-1289c1ea9df2')
