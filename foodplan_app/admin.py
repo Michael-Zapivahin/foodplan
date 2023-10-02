@@ -24,6 +24,11 @@ class AllergyTagInline(admin.TabularInline):
     model = DishAllergyTag
 
 
+class ComponentsInline(admin.TabularInline):
+    extra = 0
+    model = Component
+
+
 @admin.register(Dish)
 class DishAdmin(admin.ModelAdmin):
     def image_tag(self, dish):
@@ -32,7 +37,7 @@ class DishAdmin(admin.ModelAdmin):
             url=dish.photo.url,
             height='100px',
         )
-    inlines = [TagInline, AllergyTagInline]
+    inlines = [TagInline, AllergyTagInline, ComponentsInline]
     image_tag.short_description = 'Photo'
     list_display = ['title', 'image_tag']
     ordering = ['title']
